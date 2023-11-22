@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         addCategorie();
     });
 
+    loadCategories();
     renderCategories();
 });
 
@@ -20,7 +21,9 @@ function addCategorie() {
         categories.unshift({ text: categorieInput.value, completed: false });
         categorieInput.value = "";
 
+        saveCategories();
         renderCategories();
+
     }
 }
 
@@ -55,3 +58,14 @@ function moveTask(index, direction) {
     console.log("Moving task:", index, "Direction:", direction);
 }
 
+function saveCategories() {
+    localStorage.setItem("categories", JSON.stringify(categories));
+}
+
+function loadCategories() {
+    const savedCategories = localStorage.getItem("categories");
+
+    if (savedCategories) {
+        categories = JSON.parse(savedCategories);
+    }
+}
