@@ -9,9 +9,6 @@ body {
     background: linear-gradient(to bottom right, #3498db, #2ecc71); /* Verloop van blauw naar groen */
 }
 
-.wrapper {
-    display: flex;
-}
 
 .sidebar {
     width: 300px;
@@ -73,6 +70,16 @@ body {
     max-height: 400px; /* Hier kun je de maximale hoogte aanpassen naar wens */
     overflow-y: auto; /* Voegt een verticale scrollbar toe indien nodig */
     margin-top: 20px;
+    color: black;
+    text-align: center;
+}
+
+.categorieItem {
+border: 5px black;
+padding: 10px;
+margin-bottom: 10px;
+background-color: #ADD8E6;
+border-radius: 5px;
 }
 
 @keyframes fadeIn {

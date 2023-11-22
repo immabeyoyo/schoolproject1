@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const categorieForm = document.getElementById("categorieForm");
 
     categorieForm.addEventListener("submit", function (event) {
+        console.log("Form Submitted");
         event.preventDefault();
         addCategorie();
     });
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function addCategorie() {
     const categorieInput = document.getElementById("categorieInput");
+    console.log("Adding Categorie:", categorieInput.value);
     
     if (categorieInput.value.trim() !== "") {
         categories.unshift({ text: categorieInput.value, completed: false });
@@ -40,13 +42,16 @@ function createCategorieItem(categorie, index) {
     const categorieText = document.createElement("span");
     categorieText.innerText = categorie.text;
 
-    const moveUpButton = createButton("Omhoog", () => moveTask(index, -1));
-    const moveDownButton = createButton("Omlaag", () => moveTask(index, 1));
+
 
     categorieItem.appendChild(categorieText);
-    categorieItem.appendChild(moveUpButton);
-    categorieItem.appendChild(moveDownButton);
+
 
     return categorieItem;
+}
+
+function moveTask(index, direction) {
+    // Dummy function for now
+    console.log("Moving task:", index, "Direction:", direction);
 }
 
