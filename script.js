@@ -6,9 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     categorieForm.addEventListener("submit", function (event) {
         event.preventDefault();
         addCategorie();
-    } );
+    });
 
-    loadCategories();
     renderCategories();
 });
 
@@ -19,7 +18,6 @@ function addCategorie() {
         categories.unshift({ text: categorieInput.value, completed: false });
         categorieInput.value = "";
 
-        saveCategories();
         renderCategories();
     }
 }
@@ -33,15 +31,22 @@ function renderCategories() {
         categorieList.appendChild(categorieItem);
     });
 }
-document.addEventListener("DOMContentLoaded", function () {
-    const categorieForm = document.getElementById("categorieForm");
 
-    categorieForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        addCategorie();
-    });
+function createCategorieItem(categorie, index) {
+    const categorieItem = document.createElement("div");
+    categorieItem.classList.add("categorieItem");
+    categorieItem.style.animation = "fadeIn 0.5s ease";
 
-    loadCategories();
-    renderCategories();
-});
+    const categorieText = document.createElement("span");
+    categorieText.innerText = categorie.text;
+
+    const moveUpButton = createButton("Omhoog", () => moveTask(index, -1));
+    const moveDownButton = createButton("Omlaag", () => moveTask(index, 1));
+
+    categorieItem.appendChild(categorieText);
+    categorieItem.appendChild(moveUpButton);
+    categorieItem.appendChild(moveDownButton);
+
+    return categorieItem;
+}
 
