@@ -53,11 +53,6 @@ function createCategorieItem(categorie, index) {
     return categorieItem;
 }
 
-function moveTask(index, direction) {
-    // Dummy function for now
-    console.log("Moving task:", index, "Direction:", direction);
-}
-
 function saveCategories() {
     localStorage.setItem("categories", JSON.stringify(categories));
 }
