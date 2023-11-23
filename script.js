@@ -51,9 +51,16 @@ function createCategorieItem(categorie, index) {
     const categorieText = document.createElement("span");
     categorieText.innerText = categorie.text;
 
+    const openButton = document.createElement("Button");
+    openButton.innerText = "Open";
+    openButton.addEventListener("click", function () {
+        openCategorie(index);
+    });
+
     categorieItem.appendChild(deleteButton);
     categorieItem.appendChild(categorieText);
-    
+    categorieItem.appendChild(openButton);
+
     return categorieItem;
 }
 
@@ -61,6 +68,10 @@ function removeCategorie(index) {
     categories.splice(index, 1);
     saveCategories();
     renderCategories();
+}
+
+function openCategorie(index) {
+    // voeg open categorie functin toe
 }
 
 function saveCategories() {
