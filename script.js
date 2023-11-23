@@ -42,17 +42,25 @@ function createCategorieItem(categorie, index) {
     categorieItem.classList.add("categorieItem");
     categorieItem.style.animation = "fadeIn 0.5s ease";
 
+    const deleteButton = document.createElement("Button");
+    deleteButton.innerText = "X";
+    deleteButton.addEventListener("click", function () {
+        removeCategorie(index);
+    });
+
     const categorieText = document.createElement("span");
     categorieText.innerText = categorie.text;
 
-    categorieItem.addEventListener("Click", function () {
-        consolo.log("Clicked on:", categorie.text);
-    });
-
+    categorieItem.appendChild(deleteButton);
     categorieItem.appendChild(categorieText);
-
-
+    
     return categorieItem;
+}
+
+function removeCategorie(index) {
+    categories.splice(index, 1);
+    saveCategories();
+    renderCategories();
 }
 
 function saveCategories() {
