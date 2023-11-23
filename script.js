@@ -45,7 +45,9 @@ function createCategorieItem(categorie, index) {
     const categorieText = document.createElement("span");
     categorieText.innerText = categorie.text;
 
-
+    categorieItem.addEventListener("Click", function () {
+        consolo.log("Clicked on:", categorie.text);
+    });
 
     categorieItem.appendChild(categorieText);
 
