@@ -71,8 +71,9 @@ function removeCategorie(index) {
 }
 
 function openCategorie(index) {
-    // voeg open categorie functin toe
+    
 }
+
 
 function saveCategories() {
     localStorage.setItem("categories", JSON.stringify(categories));
