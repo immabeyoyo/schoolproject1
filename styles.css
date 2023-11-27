@@ -3,19 +3,19 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     background: linear-gradient(to bottom right, #3498db, #2ecc71); /* Verloop van blauw naar groen */
 }
 
 .sidebar {
-    width: 300px;
-    background-color: #3498db;
+    width: 20%;
+    background-color: rgba(52, 152, 219, 0.3);
     padding-top: 20px;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 5%;
+    left: 2%;
 }
 
 .sidebar ul {
@@ -43,7 +43,7 @@ body {
 }
 
 #categorieInput {
-    width: 80%; /* Maak de invoerbalk 100% breedte */
+    width: 80%; /* Maak de invoerbalk 80% breedte */
     padding: 8px;
     margin-bottom: 10px; /* Voeg wat ruimte toe onder de invoerbalk */
     border: 1px solid #ddd;
@@ -66,7 +66,7 @@ body {
 }
 
 #categorieList {
-    max-height: 400px; /* Hier kun je de maximale hoogte aanpassen naar wens */
+    height: 10%;
     overflow-y: auto; /* Voegt een verticale scrollbar toe indien nodig */
     margin-top: 20px;
     color: black;
@@ -75,6 +75,17 @@ body {
 
 #categorieList .categorieItem button:nth-child(1) {
     background-color: #ac3d3d;
+    color: #fff;
+    border: none;
+    padding: 5px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    left: 5px;
+}
+
+#categorieList .categorieItem button:nth-child(1):hover {
+    background-color: #781a1a;
     color: #fff;
     border: none;
     padding: 5px 5px;
@@ -108,7 +119,7 @@ border-radius: 5px;
 
 .container {
     flex-grow: 1;
-    max-width: 600px;
+    max-width: 40%;
     background-color: rgba(255, 255, 255, 0.9);
     padding: 40px;
     border-radius: 10px;
@@ -118,6 +129,12 @@ border-radius: 5px;
 
 .main {
     font-size: 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    position: absolute;
+    top: 5%;
+    width: 40%;
 }
 
 #taskForm {
