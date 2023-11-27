@@ -9,7 +9,6 @@ body {
     background: linear-gradient(to bottom right, #3498db, #2ecc71); /* Verloop van blauw naar groen */
 }
 
-
 .sidebar {
     width: 300px;
     background-color: #3498db;
@@ -63,7 +62,7 @@ body {
 }
 
 #categorieForm button:hover {
-    background-color: #2cc47c;
+    background-color: #1e965e;
 }
 
 #categorieList {
@@ -73,6 +72,7 @@ body {
     color: black;
     text-align: center;
 }
+
 #categorieList .categorieItem button:nth-child(1) {
     background-color: #ac3d3d;
     color: #fff;
@@ -94,12 +94,119 @@ body {
     right: 5px;
 }
 
+#categorieList .categorieItem button:nth-child(3):hover {
+    background-color: #1e965e;
+}
+
 .categorieItem {
 border: 3px solid black;
 padding: 10px;
 margin-bottom: 10px;
 background-color: #ADD8E6;
 border-radius: 5px;
+}
+
+.container {
+    flex-grow: 1;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.main {
+    font-size: 20px;
+}
+
+#taskForm {
+    display: flex;
+    flex-direction: column; /* Stel de richting in op kolom (boven naar beneden) */
+    align-items: center; /* Centreer de items horizontaal */
+}
+
+#taskInput {
+    width: 100%; /* Maak de invoerbalk 100% breedte */
+    padding: 8px;
+    margin-bottom: 10px; /* Voeg wat ruimte toe onder de invoerbalk */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#taskForm button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 5px; /* Voeg een kleine marge aan de rechterkant toe tussen de knoppen */
+}
+
+#taskForm button:hover {
+    background-color: #2980b9;
+}
+
+#taskList {
+    max-height: 400px; /* Hier kun je de maximale hoogte aanpassen naar wens */
+    overflow-y: auto; /* Voegt een verticale scrollbar toe indien nodig */
+    margin-top: 20px;
+}
+
+.taskItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ecf0f1;
+    padding: 15px 0;
+    transition: background-color 0.3s ease;
+}
+
+.taskItem:hover {
+    background-color: #ecf0f1;
+}
+
+.taskItem span {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.taskItem .completed {
+    text-decoration: line-through;
+    color: #bdc3c7;
+}
+
+.taskItem .completed::after {
+    content: '\2714';
+    margin-left: 5px;
+    color: #27ae60;
+}
+
+.taskItem button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.taskItem button:hover {
+    background-color: #c0392b;
+}
+
+.taskItem .completed {
+    color: #bdc3c7;
+}
+
+.taskItem .completed::after {
+    content: '\2714'; /* Unicode character for a checkmark */
+    margin-left: 5px;
+    color: #27ae60;
 }
 
 @keyframes fadeIn {
