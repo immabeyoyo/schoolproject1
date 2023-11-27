@@ -66,7 +66,7 @@ body {
 }
 
 #categorieList {
-    height: 10%;
+    height: 400px;
     overflow-y: auto; /* Voegt een verticale scrollbar toe indien nodig */
     margin-top: 20px;
     color: black;
@@ -82,17 +82,12 @@ body {
     border-radius: 5px;
     position: absolute;
     left: 5px;
+    top: 50%;
+    transform: translateY(-50%); /* vertical centering adjust */
 }
 
 #categorieList .categorieItem button:nth-child(1):hover {
     background-color: #781a1a;
-    color: #fff;
-    border: none;
-    padding: 5px 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    position: absolute;
-    left: 5px;
 }
 
 #categorieList .categorieItem button:nth-child(3) {
@@ -103,6 +98,8 @@ body {
     cursor: pointer;
     position: absolute;
     right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #categorieList .categorieItem button:nth-child(3):hover {
