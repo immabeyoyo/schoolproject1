@@ -1,31 +1,52 @@
 let categories = [];
 let tasks = [];
+let h1Element;
 
-document.addEventListener("DOMContentLoaded", function () {
+// zorgt ervoor dat de html pagina eerst is geladen voordat hij het script uitvoert.
+// voert daarna de scripts uit.
+document.addEventListener("DOMContentLoaded", function () {             
     const categorieForm = document.getElementById("categorieForm");
+    const taskForm = document.getElementById("taskForm");
+    h1Element = document.querySelector('.wrapper h1');
 
     categorieForm.addEventListener("submit", function (event) {
-        console.log("Form Submitted");
         event.preventDefault();
         addCategorie();
     });
 
+    taskForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        addTask();
+    });
+
     loadCategories();
+    loadTasks();
     renderCategories();
+    renderTasks();
 });
+
+// pakt de input van de categorieën en maakt een nieuwe categorie aan met die naam
 
 function addCategorie() {
     const categorieInput = document.getElementById("categorieInput");
-    console.log("Adding Categorie:", categorieInput.value);
-    
-    if (categorieInput.value.trim() !== "") {
-        categories.unshift({ text: categorieInput.value, completed: false });
-        categorieInput.value = "";
 
+    if (categorieInput.value.trim() !== "") {
+        const newCategorie = {
+            text: categorieInput.value,
+            completed: false,
+            tasks: [] // initialize empty array for tasks
+        };
+        categories.unshift(newCategorie);
+        categorieInput.value = "";
         saveCategories();
         renderCategories();
+
+        var h1Element = document.querySelector('.wrapper h1');
+        h1Element.textContent = newCategorie.text;
     }
 }
+
+// laat de categorieën zien
 
 function renderCategories() {
     const categorieList = document.getElementById("categorieList");
@@ -37,25 +58,17 @@ function renderCategories() {
     });
 }
 
+// maakt de categorieën met deleteknop, naam en open knop 
+
 function createCategorieItem(categorie, index) {
     const categorieItem = document.createElement("div");
     categorieItem.classList.add("categorieItem");
     categorieItem.style.animation = "fadeIn 0.5s ease";
 
-    const deleteButton = document.createElement("Button");
-    deleteButton.innerText = "X";
-    deleteButton.addEventListener("click", function () {
-        removeCategorie(index);
-    });
-
+    const deleteButton = createButton("X", () => removeCategorie(index));
     const categorieText = document.createElement("span");
+    const openButton = createButton("Open", () => openCategorie(index));
     categorieText.innerText = categorie.text;
-
-    const openButton = document.createElement("Button");
-    openButton.innerText = "Open";
-    openButton.addEventListener("click", function () {
-        openCategorie(index);
-    });
 
     categorieItem.appendChild(deleteButton);
     categorieItem.appendChild(categorieText);
@@ -64,9 +77,14 @@ function createCategorieItem(categorie, index) {
     return categorieItem;
 }
 
+// de functie voor het openen van de categorie
 function openCategorie(index) {
-    
+    var h1Element = document.querySelector('.wrapper h1');
+    h1Element.textContent = categories[index].text;
+    renderTasks(index);
 }
+
+//functie voor het verwijderen van de categorie
 
 function removeCategorie(index) {
     categories.splice(index, 1);
@@ -74,11 +92,12 @@ function removeCategorie(index) {
     renderCategories();
 }
 
-// Remove the empty openCategorie function if it's not needed
-
+// slaat de categorieën op in json.
 function saveCategories() {
     localStorage.setItem("categories", JSON.stringify(categories));
 }
+
+// functie die de categoriën laad
 
 function loadCategories() {
     const savedCategories = localStorage.getItem("categories");
@@ -88,54 +107,46 @@ function loadCategories() {
     }
 }
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    const taskForm = document.getElementById("taskForm");
-
-    taskForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        addTask();
-    });
-
-    loadTasks();
-    renderTasks();
-});
+// voeg een taak toe.
 
 function addTask() {
     const taskInput = document.getElementById("taskInput");
 
     if (taskInput.value.trim() !== "") {
-        tasks.unshift({ text: taskInput.value, completed: false });
-        taskInput.value = "";
 
-        saveTasks();
-        renderTasks();
+        const selectedCategoryIndex = categories.findIndex(c => c.text === h1Element.textContent);
+
+        if (selectedCategoryIndex !== -1) {
+            const newTask = {
+                text: taskInput.value,
+                completed: false
+            };
+            categories[selectedCategoryIndex].tasks.unshift(newTask);
+            taskInput.value = "";
+            saveTasks();
+            renderTasks();
+        }
     }
 }
+
+// laat de gemaakte taken zien
 
 function renderTasks() {
     const taskList = document.getElementById("taskList");
     taskList.innerHTML = "";
 
-    tasks.forEach((task, index) => {
-        const taskItem = createTaskItem(task, index);
-        taskList.appendChild(taskItem);
-    });
+    // Find the selected category index
+    const selectedCategoryIndex = categories.findIndex(c => c.text === h1Element.textContent);
+
+    if (selectedCategoryIndex !== -1) {
+        const tasksToRender = categories[selectedCategoryIndex].tasks;
+
+        tasksToRender.forEach((task, index) => {
+            const taskItem = createTaskItem(task, index);
+            taskList.appendChild(taskItem);
+        });
+    }
 }
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const taskForm = document.getElementById("taskForm");
-
-    taskForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        addTask();
-    });
-
-    loadTasks();
-    renderTasks();
-});
-
 
 
 function moveTask(index, direction) {
@@ -150,7 +161,9 @@ function moveTask(index, direction) {
     }
 }
 
-function createTaskItem(task, index) {const categorieForm = document.getElementById("categorieForm");
+//alle knopjes van de taken
+
+function createTaskItem(task, index) {
     const taskItem = document.createElement("div");
     taskItem.classList.add("taskItem");
     taskItem.style.animation = "fadeIn 0.5s ease";
@@ -160,11 +173,10 @@ function createTaskItem(task, index) {const categorieForm = document.getElementB
     taskText.classList.toggle("completed", task.completed);
 
     const deleteButton = createButton("Verwijderen", () => deleteTask(index));
-
     const completeButton = createButton(
-        task.completed ? "Herstellen" : "Voltooien", () => toggleTaskComplete(index)
+        task.completed ? "Herstellen" : "Voltooien",
+        () => toggleTaskComplete(index)
     );
-
     const moveUpButton = createButton("Omhoog", () => moveTask(index, -1));
     const moveDownButton = createButton("Omlaag", () => moveTask(index, 1));
 
@@ -177,12 +189,15 @@ function createTaskItem(task, index) {const categorieForm = document.getElementB
     return taskItem;
 }
 
+// wat de knopjes doen
+// delete
+
 function deleteTask(index) {
     tasks.splice(index, 1);
     saveTasks();
     renderTasks();
 }
-
+// voltooid
 function toggleTaskComplete(index) {
     tasks[index].completed = !tasks[index].completed;
     saveTasks();
@@ -195,11 +210,11 @@ function createButton(text, clickHandler) {
     button.addEventListener("click", clickHandler);
     return button;
 }
-
+//slaat taken op in json
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
-
+//laad de taken uit json
 function loadTasks() {
     const savedTasks = localStorage.getItem("tasks");
 
