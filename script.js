@@ -1,4 +1,5 @@
 let categories = [];
+let tasks = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     const categorieForm = document.getElementById("categorieForm");
@@ -64,7 +65,7 @@ function createCategorieItem(categorie, index) {
 }
 
 function openCategorie(index) {
-
+    
 }
 
 function removeCategorie(index) {
@@ -87,7 +88,6 @@ function loadCategories() {
     }
 }
 
-let tasks = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     const taskForm = document.getElementById("taskForm");
@@ -123,15 +123,6 @@ function renderTasks() {
     });
 }
 
-function renderTasks() {
-    const taskList = document.getElementById("taskList");
-    taskList.innerHTML = "";
-
-    tasks.forEach((task, index) => {
-        const taskItem = createCategorieItem(task, index);
-        categorieList.appendChild(categorieItem);
-    });
-}
 
 document.addEventListener("DOMContentLoaded", function () {
     const taskForm = document.getElementById("taskForm");
@@ -145,28 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
     renderTasks();
 });
 
-function addTask() {
-    const taskInput = document.getElementById("taskInput");
 
-    if (taskInput.value.trim() !== "") {
-        tasks.unshift({ text: taskInput.value, completed: false });
-        taskInput.value = "";
-
-        saveTasks();
-        renderTasks();
-    }
-}
-
-
-function renderTasks() {
-    const taskList = document.getElementById("taskList");
-    taskList.innerHTML = "";
-
-    tasks.forEach((task, index) => {
-        const taskItem = createTaskItem(task, index);
-        taskList.appendChild(taskItem);
-    });
-}
 
 function moveTask(index, direction) {
     const newIndex = index + direction;
