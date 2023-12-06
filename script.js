@@ -33,8 +33,6 @@ function addCategorie() {
     if (categorieInput.value.trim() !== "") {
         const newCategorie = {
             text: categorieInput.value,
-            completed: false,
-            tasks: [] // initialize empty array for tasks
         };
         categories.unshift(newCategorie);
         categorieInput.value = "";
@@ -131,22 +129,29 @@ function addTask() {
 
 // laat de gemaakte taken zien
 
-function renderTasks() {
-    const taskList = document.getElementById("taskList");
-    taskList.innerHTML = "";
+function addTask() {
+    const taskInput = document.getElementById("taskInput");
 
-    // Find the selected category index
-    const selectedCategoryIndex = categories.findIndex(c => c.text === h1Element.textContent);
+    if (taskInput.value.trim() !== "") {
+        const selectedCategoryIndex = categories.findIndex(c => c.text === h1Element.textContent);
 
-    if (selectedCategoryIndex !== -1) {
-        const tasksToRender = categories[selectedCategoryIndex].tasks;
+        if (selectedCategoryIndex !== -1) {
+            const newTask = {
+                text: taskInput.value,
+                completed: false
+            };
+            categories[selectedCategoryIndex].tasks.unshift(newTask);
 
-        tasksToRender.forEach((task, index) => {
-            const taskItem = createTaskItem(task, index);
-            taskList.appendChild(taskItem);
-        });
+            // Update the tasks array
+            tasks = categories.flatMap(category => category.tasks);
+
+            taskInput.value = "";
+            saveTasks();
+            renderTasks();
+        }
     }
 }
+
 
 
 function moveTask(index, direction) {
@@ -197,6 +202,7 @@ function deleteTask(index) {
     saveTasks();
     renderTasks();
 }
+
 // voltooid
 function toggleTaskComplete(index) {
     tasks[index].completed = !tasks[index].completed;
@@ -210,11 +216,11 @@ function createButton(text, clickHandler) {
     button.addEventListener("click", clickHandler);
     return button;
 }
-//slaat taken op in json
+//slaat taken op via json
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
-//laad de taken uit json
+//laad de taken via json
 function loadTasks() {
     const savedTasks = localStorage.getItem("tasks");
 
